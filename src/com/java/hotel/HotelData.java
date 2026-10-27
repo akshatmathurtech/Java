@@ -1,0 +1,39 @@
+package com.java.hotel;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class HotelData {
+
+	public List<Hotel> storeAllHotels()
+	{
+		List<Hotel> hotels=new ArrayList<Hotel>();
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection  connection=DriverManager.getConnection
+					("jdbc:mysql://localhost:3306/hotel_schema", "root","root");
+			Statement statement=connection.createStatement();
+			ResultSet set=statement.executeQuery("SELECT * FROM hotel_schema .hotel;");
+		while(set.next())
+		{
+		Hotel hotel=new Hotel(set.getInt(1), set.getString(2), set.getString(3), set.getInt(4));
+		hotels.add(hotel);
+		}
+		
+		
+		
+		}
+		catch (Exception e) {
+			
+			System.out.println(e);
+		}
+		return hotels;
+		
+	}
+}
